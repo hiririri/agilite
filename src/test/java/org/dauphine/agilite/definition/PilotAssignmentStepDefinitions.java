@@ -1,6 +1,5 @@
 package org.dauphine.agilite.definition;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,25 +9,20 @@ import org.dauphine.agilite.Pilot;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class AircraftStepDefinitions {
+public class PilotAssignmentStepDefinitions {
 
     private Pilot pilot;
     private Aircraft aircraft;
     private Aircraft anotherAircraft;
 
-    @Given("an aircraft with registration {string} and remaining fuel of {int}")
-    public void an_aircraft_with_registration_and_remaining_fuel(String registration, int initialFuel) {
-        aircraft = new Aircraft(registration, initialFuel, null);
+    @Given("an aircraft with registration {string}")
+    public void an_aircraft_with_registration(String registration) {
+        aircraft = new Aircraft(registration, 0, null);
     }
 
     @Given("a pilot named {string}")
     public void aPilotNamed(String pilotName) {
         pilot = new Pilot(pilotName);
-    }
-
-    @When("I add {int} units of fuel")
-    public void i_add_units_of_fuel(int fuelToAdd) {
-        aircraft.refuel(fuelToAdd);
     }
 
     @When("I assign the pilot to the aircraft")
@@ -47,12 +41,6 @@ public class AircraftStepDefinitions {
         anotherAircraft.setPilot(pilot);
     }
 
-    @Then("the remaining fuel should be {int}")
-    public void the_remaining_fuel_should_be(int expectedFuel) {
-        assertEquals(expectedFuel, aircraft.getRemainingFuel(),
-                "The remaining fuel does not match the expected value.");
-    }
-
     @Then("the aircraft should have the pilot {string}")
     public void theAircraftShouldHaveThePilot(String pilotName) {
         assertEquals(pilotName, aircraft.getPilot().getName());
@@ -68,24 +56,24 @@ public class AircraftStepDefinitions {
         assertEquals(numberOfAircrafts, pilot.getAircrafts().size());
     }
 
-    @And("the pilot should have {int} aircraft")
+    @Then("the pilot should have {int} aircraft")
     public void thePilotShouldHaveAircraft(int numberOfAircraft) {
         assertEquals(numberOfAircraft, pilot.getAircrafts().size());
     }
 
-    @And("the aircraft has a pilot {string}")
+    @Given("the aircraft has a pilot {string}")
     public void theAircraftHasAPilot(String pilotName) {
         pilot = new Pilot(pilotName);
         aircraft = new Aircraft("F-GZDK", 150, pilot);
     }
 
-    @And("the pilot should not have the aircraft")
+    @Then("the pilot should not have the aircraft")
     public void thePilotShouldNotHaveTheAircraft() {
         assertEquals(0, pilot.getAircrafts().size());
     }
 
-    @And("another aircraft with registration {string} and remaining fuel of {int}")
-    public void anotherAircraftWithRegistrationAndRemainingFuelOf(String registration, int remainingFuel) {
-        anotherAircraft = new Aircraft(registration, remainingFuel, null);
+    @Given("another aircraft with registration {string}")
+    public void anotherAircraftWithRegistrationAndRemainingFuelOf(String registration) {
+        anotherAircraft = new Aircraft(registration, 0, null);
     }
 }
