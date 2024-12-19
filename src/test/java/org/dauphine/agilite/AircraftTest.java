@@ -1,13 +1,11 @@
 package org.dauphine.agilite;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-
-public class AircraftTest {
+class AircraftTest {
 
     private Pilot pilot;
     private Aircraft aircraft;
@@ -43,6 +41,5 @@ public class AircraftTest {
         aircraft.refuel(30);
         assertEquals(initialFuel + 30, aircraft.getRemainingFuel());
     }
-
 
 }
