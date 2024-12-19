@@ -34,14 +34,16 @@ public class Aircraft {
     }
 
     private boolean isFuelAmountValid(int fuel) {
-        return fuel > 0;
+        return fuel >= 0;
     }
 
     public void refuel(int fuel) {
         if (isFuelAmountValid(fuel)) {
             this.remainingFuel += fuel;
+            return;
         }
-    }
 
+        throw new IllegalArgumentException("Fuel amount must be positive");
+    }
 
 }

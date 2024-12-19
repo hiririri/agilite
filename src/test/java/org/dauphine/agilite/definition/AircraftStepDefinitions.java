@@ -21,9 +21,30 @@ public class AircraftStepDefinitions {
         aircraft = new Aircraft(registration, initialFuel, null);
     }
 
+    @Given("a pilot named {string}")
+    public void aPilotNamed(String pilotName) {
+        pilot = new Pilot(pilotName);
+    }
+
     @When("I add {int} units of fuel")
     public void i_add_units_of_fuel(int fuelToAdd) {
         aircraft.refuel(fuelToAdd);
+    }
+
+    @When("I assign the pilot to the aircraft")
+    public void iAssignThePilotToTheAircraft() {
+        aircraft.setPilot(pilot);
+    }
+
+    @When("I remove the pilot from the aircraft")
+    public void iRemoveThePilotFromTheAircraft() {
+        aircraft.setPilot(null);
+    }
+
+    @When("I assign the pilot to both aircrafts")
+    public void iAssignThePilotToBothAircrafts() {
+        aircraft.setPilot(pilot);
+        anotherAircraft.setPilot(pilot);
     }
 
     @Then("the remaining fuel should be {int}")
@@ -32,19 +53,19 @@ public class AircraftStepDefinitions {
                 "The remaining fuel does not match the expected value.");
     }
 
-    @Given("a pilot named {string}")
-    public void aPilotNamed(String pilotName) {
-        pilot = new Pilot(pilotName);
-    }
-
-    @When("I assign the pilot to the aircraft")
-    public void iAssignThePilotToTheAircraft() {
-        aircraft.setPilot(pilot);
-    }
-
     @Then("the aircraft should have the pilot {string}")
     public void theAircraftShouldHaveThePilot(String pilotName) {
         assertEquals(pilotName, aircraft.getPilot().getName());
+    }
+
+    @Then("the aircraft should not have a pilot")
+    public void theAircraftShouldNotHaveAPilot() {
+        assertNull(aircraft.getPilot());
+    }
+
+    @Then("the pilot should have {int} aircrafts")
+    public void thePilotShouldHaveAircrafts(int numberOfAircrafts) {
+        assertEquals(numberOfAircrafts, pilot.getAircrafts().size());
     }
 
     @And("the pilot should have {int} aircraft")
@@ -58,16 +79,6 @@ public class AircraftStepDefinitions {
         aircraft = new Aircraft("F-GZDK", 150, pilot);
     }
 
-    @When("I remove the pilot from the aircraft")
-    public void iRemoveThePilotFromTheAircraft() {
-        aircraft.setPilot(null);
-    }
-
-    @Then("the aircraft should not have a pilot")
-    public void theAircraftShouldNotHaveAPilot() {
-        assertNull(aircraft.getPilot());
-    }
-
     @And("the pilot should not have the aircraft")
     public void thePilotShouldNotHaveTheAircraft() {
         assertEquals(0, pilot.getAircrafts().size());
@@ -77,16 +88,4 @@ public class AircraftStepDefinitions {
     public void anotherAircraftWithRegistrationAndRemainingFuelOf(String registration, int remainingFuel) {
         anotherAircraft = new Aircraft(registration, remainingFuel, null);
     }
-
-    @When("I assign the pilot to both aircrafts")
-    public void iAssignThePilotToBothAircrafts() {
-        aircraft.setPilot(pilot);
-        anotherAircraft.setPilot(pilot);
-    }
-
-    @Then("the pilot should have {int} aircrafts")
-    public void thePilotShouldHaveAircrafts(int numberOfAircrafts) {
-        assertEquals(numberOfAircrafts, pilot.getAircrafts().size());
-    }
-
 }

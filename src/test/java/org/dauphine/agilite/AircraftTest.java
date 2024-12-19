@@ -23,6 +23,11 @@ class AircraftTest {
     }
 
     @Test
+    public void testThrowExceptionWhenAddingNegativeFuel() {
+        assertThrows(IllegalArgumentException.class, () -> aircraft.refuel(-50));
+    }
+
+    @Test
     public void testGetPilotName() {
         assertEquals("Maverick", aircraft.getPilot().getName());
     }

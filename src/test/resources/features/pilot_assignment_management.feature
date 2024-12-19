@@ -1,4 +1,9 @@
-Feature: Manage Aircraft and Pilot
+Feature: Manage Pilot Assignments
+
+  # User Story:
+  # As a fleet operations manager,
+  # I want to manage pilot assignments to aircraft,
+  # So that I can prevent conflicts and maintain proper operational responsibility.
 
   Scenario Outline: Refuel an aircraft with different amounts
     Given an aircraft with registration "<registration>" and remaining fuel of <initialFuel>
